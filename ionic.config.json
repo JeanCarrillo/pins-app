@@ -1,0 +1,7 @@
+{
+  "name": "pinsApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
