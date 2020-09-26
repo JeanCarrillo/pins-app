@@ -1,0 +1,25 @@
+.mapContainer {
+  height: 100%;
+  width: 100%;
+}
+
+.pin-map-marker {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 2px solid grey;
+}
+
+.touch-map {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 12px;
+  border-radius: 10px;
+  z-index: 3;
+}
