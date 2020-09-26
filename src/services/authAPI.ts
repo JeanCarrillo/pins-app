@@ -1,6 +1,7 @@
 import axios from "axios";
 import JwtDecode from "jwt-decode";
 import { AUTH_API } from "../config/api";
+import { User } from "../types/interfaces";
 
 const login = async (username: string, password: string): Promise<boolean> => {
   return axios.post(AUTH_API + "/login", { username, password }).then((res) => {
@@ -9,6 +10,15 @@ const login = async (username: string, password: string): Promise<boolean> => {
     axios.defaults.headers["Authorization"] = "Bearer " + token;
     return true;
   });
+};
+
+const register = async (username: string, password: string): Promise<User> => {
+  return axios
+    .post(AUTH_API + "/signup", { username, password })
+    .then((res) => {
+      console.log({ res });
+      return res.data;
+    });
 };
 
 const logout = (): void => {
@@ -47,4 +57,4 @@ const isExpired = (token: string): boolean => {
   }
 };
 
-export default { login, logout, init, isLogged, getUserId };
+export default { login, register, logout, init, isLogged, getUserId };

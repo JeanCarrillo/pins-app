@@ -14,12 +14,14 @@ import {
 import { useHistory } from "react-router-dom";
 import authAPI from "../services/authAPI";
 import AuthContext from "../contexts/AuthContext";
-import RegisterPage from "./RegisterPage";
 
-const LoginPage: React.FC = () => {
+interface RegisterProps {
+  setRegister: Function;
+}
+
+const RegisterPage = ({ setRegister }: RegisterProps) => {
   const history = useHistory();
   const { setIsLogged } = useContext(AuthContext);
-  const [register, setRegister] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<{
@@ -27,27 +29,27 @@ const LoginPage: React.FC = () => {
     showErrorToast: boolean;
   }>({ message: "", showErrorToast: false });
 
-  const handleRegister = (): void => {
-    setRegister(true);
-  };
-
-  const handleLogin = async (): Promise<void> => {
+  const handleRegister = async () => {
     try {
+      await authAPI.register(username, password);
       await authAPI.login(username, password);
       setIsLogged(true);
       history.replace("/map");
     } catch (error) {
-      setError({ showErrorToast: true, message: "Invalid credentials" });
+      setError({ showErrorToast: true, message: "Invalid request" });
     }
   };
 
-  if (register) return <RegisterPage setRegister={setRegister} />;
+  const goBackToLogin = () => {
+    setRegister(false);
+    history.replace("/login");
+  };
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar color="light">
-          <IonTitle>Login</IonTitle>
+          <IonTitle>Register</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
@@ -74,15 +76,19 @@ const LoginPage: React.FC = () => {
           />
         </IonItem>
         <div style={{ padding: 10, paddingTop: 20 }}>
-          <IonButton expand="full" style={{ margin: 14 }} onClick={handleLogin}>
-            Login
-          </IonButton>
           <IonButton
             expand="full"
             style={{ margin: 14 }}
             onClick={handleRegister}
           >
             Create Account
+          </IonButton>
+          <IonButton
+            expand="full"
+            style={{ margin: 14 }}
+            onClick={goBackToLogin}
+          >
+            Back to login
           </IonButton>
         </div>
         <IonToast
@@ -97,4 +103,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

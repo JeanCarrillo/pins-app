@@ -44,7 +44,7 @@ const App: React.FC = () => {
       <SWRConfig value={{ fetcher }}>
         <IonApp>
           <IonReactRouter>
-            <Route path="/login" component={LoginPage} exact={true} />
+            <Route exact path="/login" component={LoginPage} />
             <Route path="/" component={isLogged ? MainTabs : LoginPage} />
           </IonReactRouter>
         </IonApp>
