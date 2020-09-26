@@ -10,7 +10,7 @@ Simple app where you can create events on a map using points users pay for, ever
 - Stripe payment
 - Mapbox
 
-.env :
+.env should contain :
 
 ```
 REACT_APP_MAPBOX_TOKEN
