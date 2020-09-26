@@ -59,5 +59,6 @@
     "@capacitor/cli": "2.4.1"
   },
   "description": "Ionic + React + Typescript app where you can create events on a map using points users pay for, every event has a start date/end date. It uses Ionic + React + Typescript + SWR to handle/cache http requests + JWT authentication + Stripe payment + Mapbox",
+  "author": "Jean Carrillo",
   "license": "MIT"
 }
