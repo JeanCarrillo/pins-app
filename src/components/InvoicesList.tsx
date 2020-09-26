@@ -1,21 +1,7 @@
 import { IonCol, IonList, IonRow } from "@ionic/react";
 import React from "react";
 import { Invoice } from "../types/interfaces";
-
-const twoChars = (num: number): string =>
-  num < 10 ? "0" + num.toString() : num.toString();
-
-const getFormattedDate = (date: string): string => {
-  const d = new Date(date);
-  return `${d.getFullYear()}/${twoChars(d.getMonth() + 1)}/${twoChars(
-    d.getDate()
-  )}`;
-};
-
-const getFormattedHours = (date: string): string => {
-  const d = new Date(date);
-  return `${twoChars(d.getHours())}:${twoChars(d.getMinutes())}`;
-};
+import { getFormattedDate, getFormattedTime } from "../helpers/time";
 
 const InvoicesList = ({ invoices }: { invoices: Invoice[] }) => (
   <IonList>
@@ -26,7 +12,7 @@ const InvoicesList = ({ invoices }: { invoices: Invoice[] }) => (
             {getFormattedDate(invoice.createdAt)}
           </IonRow>
           <IonRow className="ion-justify-content-center">
-            {getFormattedHours(invoice.createdAt)}
+            {getFormattedTime(invoice.createdAt)}
           </IonRow>
         </IonCol>
         <IonCol>

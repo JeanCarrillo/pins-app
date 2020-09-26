@@ -16,7 +16,6 @@ const register = async (username: string, password: string): Promise<User> => {
   return axios
     .post(AUTH_API + "/signup", { username, password })
     .then((res) => {
-      console.log({ res });
       return res.data;
     });
 };

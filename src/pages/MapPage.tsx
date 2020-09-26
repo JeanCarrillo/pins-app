@@ -12,9 +12,10 @@ import mapboxgl from "mapbox-gl";
 import "./MapPage.css";
 import { Coords, LatLng, Pin } from "../types/interfaces";
 import NewPinModal from "../components/NewPinModal";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import PinDetailsModal from "../components/PinDetailsModal";
 import { ASSETS_URL } from "../config/api";
+import { fetcher } from "../config/swr";
 
 const Map = ReactMapboxGl({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN || "",
@@ -26,7 +27,7 @@ const MapPage: React.FC = () => {
   const [selectedPin, setSelectedpin] = useState<Pin | null>(null);
   const [newPinLatLng, setNewPinLatLng] = useState<LatLng>();
   const [coords, setCoords] = useState<Coords>([4.79, 45.75]);
-  const { data: pins } = useSWR(`/pins?coords=${coords}`);
+  const { data: pins } = useSWR("/pins");
 
   const handleMapClick = (map: mapboxgl.Map, e: any): void => {
     if (!addingPin) return;
@@ -47,6 +48,7 @@ const MapPage: React.FC = () => {
   const onDragEnd = (map: mapboxgl.Map, e: React.SyntheticEvent<any>): void => {
     const { lng, lat } = map.getCenter();
     setCoords([lng, lat]);
+    mutate("/pins", fetcher(`/pins?coords=${coords}`));
   };
 
   return (

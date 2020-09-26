@@ -22,6 +22,7 @@ import { LatLng, Pin, PinFormData } from "../types/interfaces";
 import PinsAPI from "../services/pinsAPI";
 import useSWR from "swr";
 import AuthContext from "../contexts/AuthContext";
+import { now } from "../helpers/time";
 
 interface ModalProps {
   setShowModal: Function;
@@ -31,8 +32,6 @@ interface ModalProps {
 
 const durations: number[] = [];
 for (let i = 1; i <= 24; i++) durations.push(i);
-
-const now = () => new Date().toISOString();
 
 const initialFormData = (): PinFormData => ({
   startDate: now(),
