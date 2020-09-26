@@ -1,5 +1,5 @@
 {
-  "name": "pinsApp",
+  "name": "pins-app",
   "integrations": {
     "capacitor": {}
   },
