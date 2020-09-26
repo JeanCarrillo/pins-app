@@ -10,7 +10,7 @@ import { add, close } from "ionicons/icons";
 import ReactMapboxGl, { Marker } from "react-mapbox-gl";
 import mapboxgl from "mapbox-gl";
 import "./MapPage.css";
-import { LatLng, Pin } from "../types/interfaces";
+import { Coords, LatLng, Pin } from "../types/interfaces";
 import NewPinModal from "../components/NewPinModal";
 import useSWR from "swr";
 import PinDetailsModal from "../components/PinDetailsModal";
@@ -21,26 +21,33 @@ const Map = ReactMapboxGl({
 });
 
 const MapPage: React.FC = () => {
-  const { data: pins } = useSWR("/pins");
-
   const [addingPin, setAddingPin] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedPin, setSelectedpin] = useState<Pin | null>(null);
   const [newPinLatLng, setNewPinLatLng] = useState<LatLng>();
+  const [coords, setCoords] = useState<Coords>([4.79, 45.75]);
+  const { data: pins } = useSWR(`/pins?coords=${coords}`);
 
-  const handleMapClick = (map: mapboxgl.Map, e: any) => {
+  const handleMapClick = (map: mapboxgl.Map, e: any): void => {
     if (!addingPin) return;
     setNewPinLatLng(e.lngLat);
     setShowModal(true);
   };
 
-  const handleAddPinClick = (e: React.MouseEvent) => {
+  const handleAddPinClick = (e: React.MouseEvent): void => {
     e.stopPropagation();
     setNewPinLatLng(undefined);
     setAddingPin((s) => !s);
   };
 
-  const onStyleLoad = (map: mapboxgl.Map) => map.resize();
+  const onStyleLoad = (map: mapboxgl.Map): void => {
+    map.resize();
+  };
+
+  const onDragEnd = (map: mapboxgl.Map, e: React.SyntheticEvent<any>): void => {
+    const { lng, lat } = map.getCenter();
+    setCoords([lng, lat]);
+  };
 
   return (
     <IonPage>
@@ -59,7 +66,8 @@ const MapPage: React.FC = () => {
           containerStyle={{ width: "100%", height: "100%" }}
           onClick={handleMapClick}
           onStyleLoad={onStyleLoad}
-          center={[4.79, 45.75]}
+          center={coords}
+          onDragEnd={onDragEnd}
         >
           {pins &&
             pins.map((pin: Pin) => (

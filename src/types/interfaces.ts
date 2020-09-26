@@ -49,3 +49,5 @@ export interface PinFormData {
   duration: number;
   img: File | null;
 }
+
+export type Coords = [number, number];

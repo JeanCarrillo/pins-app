@@ -160,7 +160,7 @@ const NewPinModal = ({ showModal, setShowModal, latLng }: ModalProps) => {
                 type="file"
                 accept="image/png, image/jpeg"
                 onChange={(e: React.ChangeEvent<any>) =>
-                  handleChange("fileData", e.target.files[0])
+                  handleChange("img", e.target.files[0])
                 }
                 required
                 disabled={inputDisabled}
