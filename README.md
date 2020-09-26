@@ -1,5 +1,7 @@
 # Pins App
 
+[Back-end here](https://github.com/JeanCarrillo/pins-app-backend)
+
 Simple app where you can create events on a map using points users pay for, every event has a start date/end date.
 
 Ionic + React + Typescript
