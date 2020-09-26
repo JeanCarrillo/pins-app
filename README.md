@@ -4,11 +4,11 @@
 
 Simple app where you can create events on a map using points users pay for, every event has a start date/end date.
 
-Ionic + React + Typescript
-SWR to handle/cache http requests
-JWT authentication
-Stripe payment
-Mapbox
+- Ionic + React + Typescript
+- SWR to handle/cache http requests
+- JWT authentication
+- Stripe payment
+- Mapbox
 
 .env :
 
